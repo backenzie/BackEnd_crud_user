@@ -1,13 +1,15 @@
 import express from "express";
-import "dotenv/config"
+import "dotenv/config";
+import userRoutes from "./routes/users.routes";
+import { loginRoutes } from "./routes/login.routes";
 
 const app = express();
 app.use(express.json());
-    
-const PORT = process.env.PORT || 3000   
+app.use("/users", userRoutes);
+app.use("/login", loginRoutes);
 
-app.listen(PORT, () => {
-    console.log(`server is running at port ${PORT}`)
+app.listen(3000, () => {
+  console.log(`server is running at port 3000`);
 });
 
-export default app
+export default app;
