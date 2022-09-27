@@ -7,6 +7,7 @@ import { updateUserService } from "../Services/updtUser.service";
 export const createUserController = async (req, res) => {
   const user = req.validatedBody;
   const createdUser = await createUserservice(user);
+
   return res.status(201).json(createdUser);
 };
 

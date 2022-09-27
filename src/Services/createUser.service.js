@@ -1,4 +1,5 @@
 import { users } from "../database";
+import * as bcript from "bcryptjs";
 import { createUserSchema, userClearSchema } from "../schemas/user.schema";
 
 export const createUserservice = async (userData) => {
@@ -7,8 +8,14 @@ export const createUserservice = async (userData) => {
     abortEarly: false,
   });
 
-  users.push(userSerialized);
-  return userClearSchema.validate(userSerialized, {
+  const { password } = userData;
+  const hashPassword = await bcript.hash(password, 10);
+  const newUser = {
+    ...userSerialized,
+    password: hashPassword,
+  };
+  users.push(newUser);
+  return userClearSchema.validate(newUser, {
     stripUnknown: true,
   });
 };

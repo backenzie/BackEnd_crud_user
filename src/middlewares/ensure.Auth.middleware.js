@@ -1,26 +1,28 @@
-import { jwt } from "jsonwebtoken";
+import Jwt from "jsonwebtoken";
 import "dotenv/config";
 
-export const ensureAuthMiddleware = (request, response, next) => {
-  let token = request.headers.authorization;
+export const ensureAuthMiddleware = (req, res, next) => {
+  let token = req.headers.authorization;
 
   if (!token) {
-    return response.status(401).json({
+    return res.status(401).json({
       message: "Missing token authorization!",
     });
   }
 
   token = token.split(" ")[1];
 
-  jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
+  Jwt.verify(token, process.env.SECRET_KEY, (error, decoded) => {
     if (error) {
-      return response.status(403).json({
+      return res.status(403).json({
         message: "Unauthorized",
       });
     }
-    request.user = {
+    req.user = {
       id: decoded.sub,
+      isAdm: decoded.isAdm,
     };
+
     next();
   });
 };

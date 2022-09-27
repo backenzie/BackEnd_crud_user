@@ -1,4 +1,3 @@
-import { response } from "express";
 import { users } from "../database";
 
 export const findUserService = (id) => {

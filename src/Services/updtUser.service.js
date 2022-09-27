@@ -1,6 +1,6 @@
 import { users } from "../database";
 
-export const updateUserService = (id, user) => {
+export const updateUserService = (id) => {
   const userFound = users.findIndex((user) => user.id == id);
 
   if (userFound === -1) {

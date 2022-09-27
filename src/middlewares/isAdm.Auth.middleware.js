@@ -1,11 +1,13 @@
-export const isAdmAuth = (req, res, next) => {
-  let userIsAdm = req.body.isAdm;
+import "dotenv/config";
 
-  if (userIsAdm === false) {
-    return res.status(401).json({
-      message: "you dont have permission!",
+export const isAdmAuth = (req, res, next) => {
+  const adm = req.user.isAdm;
+
+  if (adm) {
+    next();
+  } else {
+    return res.status(403).json({
+      message: "you don't have permission",
     });
   }
-
-  next();
 };

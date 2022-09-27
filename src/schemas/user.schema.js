@@ -5,18 +5,15 @@ import * as yup from "yup";
 export const createUserSchema = yup.object().shape({
   name: yup.string().required(),
   email: yup.string().email().required(),
-  password: yup
-    .string()
-    .transform((pass) => hashSync(pass, 10))
-    .required(),
+  password: yup.string().required(),
   isAdm: yup.boolean().required(),
   createdOn: yup
     .string()
-    .transform(() => Date())
+    .default(() => Date())
     .notRequired(),
   updatedOn: yup
     .string()
-    .transform(() => Date.now())
+    .default(() => Date())
     .notRequired(),
   id: yup
     .string()
